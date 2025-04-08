@@ -1,22 +1,17 @@
-import {
-  McpServer,
-  ToolCallback,
-} from "@modelcontextprotocol/sdk/server/mcp.js";
-import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { ethers } from "ethers";
-import { getBalance } from "../../services/evm/index.js";
+import { getCode, getAddressType } from "../../services/evm/index.js";
 import { getToolOutput } from "../../utils/tools.js";
 
-export const registerBalanceTool = (server: McpServer) => {
+export const registerAccountTool = (server: McpServer) => {
   server.tool(
-    "get_evm_balance",
-    "Get the native token balance for an EVM address.",
+    "get_evm_address_type",
+    "Get the type of an EVM address.",
     {
       address: z
         .string()
         .describe(
-          "The wallet address (e.g., '0x1234...') to check the balance for"
+          "The contract address (e.g., '0x1234...') to check the type for"
         ),
       network: z
         .string()
@@ -30,16 +25,17 @@ export const registerBalanceTool = (server: McpServer) => {
         throw new Error("address is required.");
       }
       try {
-        const balance = await getBalance(address, network);
+        const code = await getCode(address, network);
+        const type = await getAddressType(address, network, code);
         return getToolOutput({
           address,
           network,
-          wei: balance.toString(),
-          ether: ethers.formatEther(balance),
+          code,
+          type,
         });
       } catch (error) {
         throw new Error(
-          `Failed to get balance for address ${address} on network ${network}: ${error}`
+          `Failed to get address type for address ${address} on network ${network}: ${error}`
         );
       }
     }

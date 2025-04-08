@@ -3,7 +3,7 @@ import { registerEvmTools } from "./tools/evm/index.js";
 
 export function createServer(): McpServer {
   const server = new McpServer({
-    name: "blockchain mcp server",
+    name: "blockchain",
     version: "0.1.0",
   });
 
