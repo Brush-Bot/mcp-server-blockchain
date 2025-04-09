@@ -3,12 +3,18 @@ import { getRpc } from "./chains.js";
 
 export const getCode = async (address: string, network: string) => {
   const rpc = getRpc(network);
-  const provider = new ethers.JsonRpcProvider(rpc);
+  const provider = new ethers.JsonRpcProvider(rpc, undefined, {
+  
+  });
   const code = await provider.getCode(address);
   return code;
 };
 
-export const getAddressType = async (address: string, network: string, code: string) => {
+export const getAddressType = async (
+  address: string,
+  network: string,
+  code: string
+) => {
   if (code === "0x") {
     return "EOA"; // Externally Owned Account
   }
