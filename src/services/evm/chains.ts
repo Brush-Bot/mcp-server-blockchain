@@ -42,10 +42,24 @@ const chainMap: Record<string, string> = Object.keys(chains).reduce(
 );
 
 export const getRpc = (network: string) => {
-  return (
+  const rpc =
     chainIdMap[network] ||
     nameMap[network.toLocaleLowerCase()] ||
     chainMap[network.toLocaleLowerCase()] ||
-    network
-  );
+    network;
+
+  if (isLink(rpc)) {
+    return rpc;
+  } else {
+    throw new Error("rpc is required.");
+  }
 };
+
+function isLink(rpc: string) {
+  try {
+    const url = new URL(rpc);
+    return ["http:", "https:"].includes(url.protocol);
+  } catch {
+    return false;
+  }
+}
