@@ -14,7 +14,7 @@ export const getAddressType = async (
   if (code === "0x") {
     return "EOA"; // Externally Owned Account
   }
-  const erc20Info = await getERC20Info(provider, address);
+  const erc20Info = await getERC20Info(address, provider);
   if (erc20Info.isERC20) {
     return "ERC20";
   }

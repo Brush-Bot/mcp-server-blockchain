@@ -70,10 +70,11 @@ export const registerBalanceTool = (server: McpServer) => {
         throw new Error("walletAddress and tokenAddress is required.");
       }
       try {
+        const provider = getProvider(network)
         const { balance, decimals } = await getERC20Balance(
           walletAddress,
           tokenAddress,
-          network
+          provider
         );
         return getToolOutput({
           walletAddress,
