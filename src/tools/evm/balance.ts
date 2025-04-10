@@ -1,11 +1,11 @@
-import {
-  McpServer,
-  ToolCallback,
-} from "@modelcontextprotocol/sdk/server/mcp.js";
-import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
+import { type McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { ethers } from "ethers";
-import { getBalance, getERC20Balance, getProvider } from "../../services/evm/index.js";
+import {
+  getBalance,
+  getERC20Balance,
+  getProvider,
+} from "../../services/evm/index.js";
 import { getToolOutput } from "../../utils/tools.js";
 
 export const registerBalanceTool = (server: McpServer) => {
@@ -30,7 +30,7 @@ export const registerBalanceTool = (server: McpServer) => {
         throw new Error("address is required.");
       }
       try {
-        const provider = getProvider(network)
+        const provider = getProvider(network);
         const balance = await getBalance(address, provider);
         return getToolOutput({
           address,
@@ -70,7 +70,7 @@ export const registerBalanceTool = (server: McpServer) => {
         throw new Error("walletAddress and tokenAddress is required.");
       }
       try {
-        const provider = getProvider(network)
+        const provider = getProvider(network);
         const { balance, decimals } = await getERC20Balance(
           walletAddress,
           tokenAddress,

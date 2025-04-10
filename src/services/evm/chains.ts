@@ -1,28 +1,6 @@
 import { ethers } from "ethers";
 import * as chains from "viem/chains";
 
-const chainIdMap: Record<string, string> = Object.keys(chains).reduce(
-  (prev, name) => {
-    const chain = chains[name as keyof typeof chains] as chains.Chain;
-    return {
-      ...prev,
-      [`${chain.id}`]: chain.rpcUrls.default.http[0],
-    };
-  },
-  {}
-);
-
-const nameMap: Record<string, string> = Object.keys(chains).reduce(
-  (prev, name) => {
-    const chain = chains[name as keyof typeof chains] as chains.Chain;
-    return {
-      ...prev,
-      [chain.name.toLocaleLowerCase()]: chain.id,
-    };
-  },
-  {}
-);
-
 const cleanName = (name: string) => {
   return name
     .replace("Chain", "")
@@ -30,24 +8,59 @@ const cleanName = (name: string) => {
     .replace("Mainnet", "");
 };
 
-const chainMap: Record<string, string> = Object.keys(chains).reduce(
+const chainIdMap: Record<string, chains.Chain> = Object.keys(chains).reduce(
   (prev, name) => {
     const chain = chains[name as keyof typeof chains] as chains.Chain;
-    const chainName = cleanName(chain.name);
     return {
       ...prev,
-      [chainName.toLocaleLowerCase()]: chain.id,
+      [`${chain.id}`]: chain,
     };
   },
   {}
 );
 
-export const getProvider = (network: string) => {
-  const rpc =
-    chainIdMap[network] ||
+const nameMap: Record<string, chains.Chain> = Object.keys(chains).reduce(
+  (prev, name) => {
+    const chain = chains[name as keyof typeof chains] as chains.Chain;
+    return {
+      ...prev,
+      [chain.name.toLocaleLowerCase()]: chainIdMap[chain.id],
+    };
+  },
+  {}
+);
+
+const chainMap: Record<string, chains.Chain> = Object.keys(chains).reduce(
+  (prev, name) => {
+    const chain = chains[name as keyof typeof chains] as chains.Chain;
+    const chainName = cleanName(chain.name);
+    return {
+      ...prev,
+      [chainName.toLocaleLowerCase()]: chainIdMap[chain.id],
+    };
+  },
+  {}
+);
+
+const shortMap: Record<string, chains.Chain> = {
+  arb: chainIdMap[`${42_161}`],
+  op: chainIdMap[`${10}`],
+  zk: chainIdMap[`${324}`],
+};
+
+export const getChainInfo = (network: string) => {
+  const chain =
     nameMap[network.toLocaleLowerCase()] ||
     chainMap[network.toLocaleLowerCase()] ||
-    network;
+    shortMap[network] ||
+    chainIdMap[network];
+  return chain;
+};
+
+export const getProvider = (network: string) => {
+  const chain = getChainInfo(network);
+
+  const rpc = chain?.rpcUrls?.default?.http?.[0] || network;
 
   if (isLink(rpc)) {
     return new ethers.JsonRpcProvider(rpc);
