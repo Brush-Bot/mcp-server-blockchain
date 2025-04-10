@@ -1,3 +1,4 @@
+import { ethers } from "ethers";
 import * as chains from "viem/chains";
 
 const chainIdMap: Record<string, string> = Object.keys(chains).reduce(
@@ -41,7 +42,7 @@ const chainMap: Record<string, string> = Object.keys(chains).reduce(
   {}
 );
 
-export const getRpc = (network: string) => {
+export const getProvider = (network: string) => {
   const rpc =
     chainIdMap[network] ||
     nameMap[network.toLocaleLowerCase()] ||
@@ -49,7 +50,7 @@ export const getRpc = (network: string) => {
     network;
 
   if (isLink(rpc)) {
-    return rpc;
+    return new ethers.JsonRpcProvider(rpc);
   } else {
     throw new Error("rpc is required.");
   }

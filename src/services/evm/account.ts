@@ -1,21 +1,16 @@
-import { ethers } from "ethers";
-import { getRpc } from "./chains.js";
+import { ethers, type JsonRpcProvider } from "ethers";
 import { getERC20Info } from "./erc20.js";
 
-export const getCode = async (address: string, network: string) => {
-  const rpc = getRpc(network);
-  const provider = new ethers.JsonRpcProvider(rpc);
+export const getCode = async (address: string, provider: JsonRpcProvider) => {
   const code = await provider.getCode(address);
   return code;
 };
 
 export const getAddressType = async (
   address: string,
-  network: string,
-  code: string
+  code: string,
+  provider: JsonRpcProvider
 ) => {
-  const rpc = getRpc(network);
-  const provider = new ethers.JsonRpcProvider(rpc);
   if (code === "0x") {
     return "EOA"; // Externally Owned Account
   }

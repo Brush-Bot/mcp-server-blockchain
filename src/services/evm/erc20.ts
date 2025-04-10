@@ -30,3 +30,5 @@ export const getERC20Info = async (provider: JsonRpcProvider, address: string) =
     };
   }
 };
+
+export const getERC20Balance = 

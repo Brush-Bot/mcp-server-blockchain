@@ -1,6 +1,10 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { getCode, getAddressType } from "../../services/evm/index.js";
+import {
+  getCode,
+  getAddressType,
+  getProvider,
+} from "../../services/evm/index.js";
 import { getToolOutput } from "../../utils/tools.js";
 
 export const registerAccountTool = (server: McpServer) => {
@@ -25,8 +29,9 @@ export const registerAccountTool = (server: McpServer) => {
         throw new Error("address is required.");
       }
       try {
-        const code = await getCode(address, network);
-        const type = await getAddressType(address, network, code);
+        const provider = getProvider(network);
+        const code = await getCode(address, provider);
+        const type = await getAddressType(address, code, provider);
         return getToolOutput({
           address,
           network,

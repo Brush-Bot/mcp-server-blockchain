@@ -1,10 +1,9 @@
-import { ethers } from "ethers";
-import { getRpc } from "./chains.js";
+import { ethers, type JsonRpcProvider } from "ethers";
 
-export const getBalance = async (address: string, network: string) => {
-  const rpc = getRpc(network);
-  const provider = new ethers.JsonRpcProvider(rpc);
-  provider.pollingInterval = 0;
+export const getBalance = async (
+  address: string,
+  provider: JsonRpcProvider
+) => {
   const balance = await provider.getBalance(address);
   return balance;
 };
