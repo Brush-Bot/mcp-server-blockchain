@@ -1,4 +1,4 @@
-import { ethers, type JsonRpcProvider } from "ethers";
+import { type JsonRpcProvider } from "ethers";
 
 export const getBalance = async (
   address: string,

@@ -46,6 +46,7 @@ const shortMap: Record<string, chains.Chain> = {
   arb: chainIdMap[`${42_161}`],
   op: chainIdMap[`${10}`],
   zk: chainIdMap[`${324}`],
+  bsc: chainIdMap[`${56}`],
 };
 
 export const getChainInfo = (network: string) => {
