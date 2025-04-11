@@ -53,7 +53,7 @@ export const registerRootDataSearchTool = (server: McpServer) => {
         const desc = $(row).find(".item_info .intro").text().trim();
         const tags = $(row)
           .find(".item_info .tags .tag")
-          .map((index, item) => {
+          .map((_, item) => {
             const tag = $(item).text().trim();
             return tag;
           })
