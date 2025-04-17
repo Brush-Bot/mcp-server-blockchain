@@ -6,7 +6,7 @@ import { getToolOutput } from "../../utils/tools.js";
 export const registerRootDataSearchTool = (server: McpServer) => {
   server.tool(
     "search_rootdata_projects",
-    "Search web3 project on rootdata, get list",
+    "Search web3 projects on rootdata by keywords",
     {
       keywords: z.string().optional().describe("Keywords to search"),
     },
