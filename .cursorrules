@@ -1,0 +1,62 @@
+Before diving into the best practices, please note that you may need to adapt the globs depending on your project's specific file structure and requirements.
+
+---
+
+name: modelcontextprotocol-best-practices.mdc
+description: Best practices for using Model Context Protocol SDK
+globs: \*_/_.{ts,tsx,js,jsx}
+
+---
+
+- Use the latest version of the SDK for optimal performance and security
+- Implement proper error handling and logging for SDK operations
+- Utilize the inspector tool for debugging and monitoring
+
+---
+
+name: cheerio-best-practices.mdc
+description: Best practices for web scraping with Cheerio
+globs: \*_/_.{ts,tsx,js,jsx}
+
+---
+
+- Use async/await for handling asynchronous operations
+- Implement proper error handling for parsing failures
+- Optimize selectors for performance and maintainability
+
+---
+
+name: ethers-best-practices.mdc
+description: Best practices for Ethereum development with Ethers.js
+globs: \*_/_.{ts,tsx,js,jsx}
+
+---
+
+- Use the latest version of Ethers.js for security and feature updates
+- Implement proper gas estimation and error handling for transactions
+- Utilize the ethers.providers.JsonRpcProvider for connecting to Ethereum nodes
+
+---
+
+name: zod-best-practices.mdc
+description: Best practices for schema validation with Zod
+globs: \*_/_.{ts,tsx,js,jsx}
+
+---
+
+- Use Zod for input validation and type inference
+- Implement custom error messages for better user experience
+- Utilize Zod's built-in parsing and transformation capabilities
+
+---
+
+name: typescript-best-practices.mdc
+description: TypeScript coding standards and type safety guidelines
+globs: \*_/_.{ts,tsx}
+
+---
+
+- Use strict null checks to prevent null pointer exceptions
+- Prefer interfaces over types for better extensibility
+- Implement proper type guards and assertions for runtime type checking
+- Utilize type inference to reduce unnecessary type annotations
