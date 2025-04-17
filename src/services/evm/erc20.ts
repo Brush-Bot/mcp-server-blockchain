@@ -49,3 +49,4 @@ export const getERC20Balance = async (
     decimals,
   };
 };
+
